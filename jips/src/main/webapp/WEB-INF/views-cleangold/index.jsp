@@ -17,14 +17,27 @@
 	<section id="content" class="container">
 		<h1 class="page-title text-right"><strong>Journal of Information Processing Systems</strong></h1>
 		<div class="grid10 col">
-			<p class="normal text-justify">The <strong>Journal of Information Processing Systems</strong>
-				(JIPS) is the official international journal of the Korea Information Processing Society.
-				As information processing systems are progressing at a rapid pace, the Korea Information Processing Society is committed to providing researchers and other professionals
-				with the academic information and resources they need to keep abreast with ongoing developments. The JIPS aims to be a premier source that enables researchers and professionals
-				all over the world to promote, share, and discuss all major research issues and developments in the field of information processing systems and other related fields. </p>
-			<p>
-				<strong>ISSN: 1976-913X (Print), ISSN: 2092-805X (Online)</strong>
-			</p>
+			<div class="col-md-6" align="center" style="background-color: red">
+				<div class="col-md-6" align="center" style="background-color: black;">
+					6
+				</div>
+				<div class="col-md-3" align="center" style="background-color: yellow">
+					3
+				</div>
+				<div class="col-md-3" align="center" style="background-color: green;">
+					3
+				</div>
+
+			</div>
+			<div class="col-md-6" salign="center" style="background-color: blue;">
+				2
+			</div>
+		</div>
+
+		<div class="col-md-10 temp">
+			<p>${test}</p>
+			<h1>${test.num}</h1>
+
 		</div>
 		<div class="grid2 col text-right">
 			<img src="${resources2}/img/jips/JIPS_engpaper.jpg" height="200" alt="JIPS"/>
@@ -55,204 +68,10 @@
 		</div>
 
 		<div class="col sep sep-big"></div>
-		<div class="grid9 col">
-			<h2 class="title">Latest Publications</h2>
-			<p style="color:#204C00" class="text-right">
-				<strong>Journal of Information Processing Systems, Vol. ${latestArray[0].volume}, No.${latestArray[0].number}, ${latestArray[0].year}</strong><br/>
-			</p>
-			<c:forEach var="l" items="${latestArray}" varStatus="status">
-				<a class="Recent" href="${baseUrl}/q.jips?cp=pp&pn=${l.num}"><strong>${l.title}</strong></a><br/>
-
-				<c:set var="tempArray" value="${fn:replace(l.authors, ', and', ',')}"/> <!-- authors and 제거 -->
-				<c:set var="tempArray" value="${fn:replace(tempArray, ' and ', ',')}"/> <!-- authors and 제거 -->
-				<c:set var="authorsArray" value="${fn:split(tempArray, ',')}"/> <!-- authors 이름을 분리 -->
-				<c:set var="authorsLength" value="${fn:length(authorsArray)}"/>
-
-				<c:if test="${authorsLength < 2}">
-					<c:forEach var="a" items="${authorsArray}">
-						<a class="Paperauthor" href="${baseUrl}/searchResult?s=${a}">${a}</a>
-					</c:forEach>
-				</c:if>
-
-				<c:if test="${authorsLength == 2}">
-					<c:forEach var="a" begin="0" end="${authorsLength-1}">
-						<c:if test="${a == 0}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a> and
-						</c:if>
-						<c:if test="${a == 1}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>
-						</c:if>
-					</c:forEach>
-				</c:if>
-
-				<c:if test="${authorsLength > 2}">
-					<c:forEach var="a" begin="0" end="${authorsLength-1}">
-						<c:if test="${a < authorsLength - 2}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>,
-						</c:if>
-						<c:if test="${a == authorsLength - 2}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a> and
-						</c:if>
-						<c:if test="${a == authorsLength - 1}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>
-						</c:if>
-					</c:forEach>
-				</c:if>
-				<br/>
-				Page: ${l.page}~${l.endpage}, Vol. ${l.volume}, No.${l.number}, ${l.year}<br/>
-
-				<img src="${resources2}/img/jips/doi_icon.png" style="vertical-align:middle;" />
-				<span class="doifont">
-				  <c:choose>
-					  <c:when test="${empty l.doi}">
-						  None
-					  </c:when>
-					  <c:otherwise>
-						  ${l.doi}
-					  </c:otherwise>
-				  </c:choose>
-				</span>
-
-
-				<c:if test="${l.year >= 2015}">
-					<br/>
-					<a class="Recent" href="${baseUrl}/q.jips?cp=pp&pn=${l.num}"><button type="button" class="btn btn-primary btn-xs">Details</button></a>
-					<!-- <button type="button" class="btn btn-danger btn-xs">PDF</button> -->
-					<a href="http://jips.jatsxml.org/Article/${l.volume}/${l.number}/${l.page}"><button type="button" class="btn btn-info btn-xs">Full Text</button></a>
-					<a href="http://jips.jatsxml.org/PubReader/${l.volume}/${l.number}/${l.page}"><button type="button" class="btn btn-warning btn-xs">PubReader</button></a>
-					<a href="http://jips.jatsxml.org/func/download.php?path=${l.epub}"><button type="button" class="btn btn-success btn-xs">ePub</button></a>
-				</c:if>
-
-				<br/>
-				<c:set var="keywordArray" value="${fn:split(l.keyword, ',')}"/>
-				<c:set var="keywordLength" value="${fn:length(keywordArray)}"/>
-				Keywords:
-				<c:forEach var="k" begin="0" end="${keywordLength - 1}">
-					<c:if test="${k < keywordLength - 1}">
-						<a class="Paperkeyword" href="${baseUrl}/searchResult?s=${fn:trim(keywordArray[k])}">${keywordArray[k]}</a>,
-					</c:if>
-					<c:if test="${k == keywordLength - 1}">
-						<a class="Paperkeyword" href="${baseUrl}/searchResult?s=${fn:trim(keywordArray[k])}">${keywordArray[k]}</a><br/>
-					</c:if>
-				</c:forEach>
-
-				<a class="Paperauthor" href="#" id="latest-${status.index}">
-					Show / Hide Abstract
-				</a>
-				<div class="mini_abstract text-justify" id="latest-div-${status.index}">
-					<span>${l.paperAbstract}</span>
-				</div>
-				<script>
-					$(document).ready(function(){
-						$("#latest-${status.index}").on("click", function (e) {
-							e.preventDefault();
-							$("#latest-div-${status.index}").toggle(200);
-						});
-					});
-				</script>
-				<br/>
-				<br/>
-			</c:forEach>
-		</div>
-		<div class="grid3 col add-bottom text-right hidden-sm hidden-xs">
-			<%@ include file="/WEB-INF/views-cleangold/include/side.jsp" %>
-		</div>
 
 
 		<div class="col sep sep-big"></div>
-		<div class="grid12 col">
-			<h2 class="title">Featured Papers</h2>
-			<c:forEach var="l" items="${featureArray}" varStatus="status">
-				<a class="Recent" href="${baseUrl}/q.jips?cp=pp&pn=${l.num}"><strong>${l.title}</strong></a><br/>
-				<c:set var="tempArray" value="${fn:replace(l.authors, ', and', ',')}"/> <!-- authors and 제거 -->
-				<c:set var="tempArray" value="${fn:replace(tempArray, ' and ', ',')}"/> <!-- authors and 제거 -->
-				<c:set var="authorsArray" value="${fn:split(tempArray, ',')}"/> <!-- authors 이름을 분리 -->
-				<c:set var="authorsLength" value="${fn:length(authorsArray)}"/>
 
-				<c:if test="${authorsLength < 2}">
-					<c:forEach var="a" items="${authorsArray}">
-						<a class="Paperauthor" href="${baseUrl}/searchResult?s=${a}">${a}</a>
-					</c:forEach>
-				</c:if>
-
-				<c:if test="${authorsLength == 2}">
-					<c:forEach var="a" begin="0" end="${authorsLength-1}">
-						<c:if test="${a == 0}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a> and
-						</c:if>
-						<c:if test="${a == 1}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>
-						</c:if>
-					</c:forEach>
-				</c:if>
-
-				<c:if test="${authorsLength > 2}">
-					<c:forEach var="a" begin="0" end="${authorsLength-1}">
-						<c:if test="${a < authorsLength - 2}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>,
-						</c:if>
-						<c:if test="${a == authorsLength - 2}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a> and
-						</c:if>
-						<c:if test="${a == authorsLength - 1}">
-							<a class="Paperauthor" href="${baseUrl}/searchResult?s=${fn:trim(authorsArray[a])}">${authorsArray[a]}</a>
-						</c:if>
-					</c:forEach>
-				</c:if>
-				<br/>
-				Pages: ${l.page}~${l.endpage}, Vol. ${l.volume}, No.${l.number}, ${l.year}
-				<br/>
-				<img src="${resources2}/img/jips/doi_icon.png" style="vertical-align:middle;" />
-				<span class="doifont">
-				  <c:choose>
-					  <c:when test="${empty l.doi}">
-						  None
-					  </c:when>
-					  <c:otherwise>
-						  ${l.doi}
-					  </c:otherwise>
-				  </c:choose>
-				</span>
-				<c:if test="${l.year >= 2015}">
-					<br/>
-					<a class="Recent" href="${baseUrl}/q.jips?cp=pp&pn=${l.num}"><button type="button" class="btn btn-primary btn-xs">Details</button></a>
-					<!-- <button type="button" class="btn btn-danger btn-xs">PDF</button> -->
-					<a href="http://jips.jatsxml.org/Article/${l.volume}/${l.number}/${l.page}"><button type="button" class="btn btn-info btn-xs">Full Text</button></a>
-					<a href="http://jips.jatsxml.org/PubReader/${l.volume}/${l.number}/${l.page}"><button type="button" class="btn btn-warning btn-xs">PubReader</button></a>
-					<a href="http://jips.jatsxml.org/func/download.php?path=${l.epub}"><button type="button" class="btn btn-success btn-xs">ePub</button></a>
-				</c:if>
-				<br/>
-
-				<c:set var="keywordArray" value="${fn:split(l.keyword, ',')}"/>
-				<c:set var="keywordLength" value="${fn:length(keywordArray)}"/>
-				Keywords:
-				<c:forEach var="k" begin="0" end="${keywordLength - 1}">
-					<c:if test="${k < keywordLength - 1}">
-						<a class="Paperkeyword" href="${baseUrl}/searchResult?s=${fn:trim(keywordArray[k])}">${keywordArray[k]}</a>,
-					</c:if>
-					<c:if test="${k == keywordLength - 1}">
-						<a class="Paperkeyword" href="${baseUrl}/searchResult?s=${fn:trim(keywordArray[k])}">${keywordArray[k]}</a><br/>
-					</c:if>
-				</c:forEach>
-
-				<a class="Paperauthor" href="#" id="featured-${status.index}">
-					Show / Hide Abstract
-				</a>
-				<div class="mini_abstract text-justify" id="featured-div-${status.index}">
-					<span>${l.paperAbstract}</span>
-				</div>
-				<script>
-					$(document).ready(function(){
-						$("#featured-${status.index}").on("click", function (e) {
-							e.preventDefault();
-							$("#featured-div-${status.index}").toggle(200);
-						});
-					});
-				</script>
-				<br/>
-				<br/>
-			</c:forEach>
-		</div>
 
 
 		<div class="col sep sep-big"></div>
@@ -280,10 +99,6 @@
 			</p>
 		</div>
 
-		<div class="hidden-lg hidden-md visible-sm visible-xs">
-			<%@ include file="/WEB-INF/views-cleangold/include/side.jsp" %>
-		</div>
-
 		<div class="col sep sep-big"></div>
 		<div class="grid12 col">
 			<h2 class="page-title text-right"><strong>Contact Information</strong></h2>
@@ -300,6 +115,7 @@
 <script>
 	$(document).ready(function(){
 		$(".mini_abstract").hide();
+		$(".temp").show();
 	});
 </script>
 </html>

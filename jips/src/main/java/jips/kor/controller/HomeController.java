@@ -50,6 +50,12 @@ public class HomeController {
         model.addAttribute("features", paperMapper.findByFeatured());
         model.addAttribute("latest", paperMapper.findByLatest());
         model.addAttribute("cPage", "home");
+
+        History history = historyMapper.findAll();
+
+        model.addAttribute("test",history);
+
+        
         return "index";
     }
 
